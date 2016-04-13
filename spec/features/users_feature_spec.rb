@@ -31,13 +31,11 @@ feature 'user can sign in and out' do
     end
 
     it "does not allow a user to edit/delete restaurant if created by another user" do
-      click_link 'Add a restaurant'
-      fill_in 'Name', with: 'KFC'
-    click_button 'Create Restaurant'
+      add_restaurant
       click_link 'Sign out'
       sign_up_two
-      expect(page).not_to have_link('Edit KFC')
-      expect(page).not_to have_link('Delete KFC')
+      click_link "Delete KFC"
+      expect(page).to have_content "Users cannot delete another user's restaurant"
     end
   end
 end
